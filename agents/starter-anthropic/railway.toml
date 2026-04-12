@@ -8,6 +8,7 @@ requiredMountPath = "/data"
 [variables]
 HERMES_HOME = "/data/.hermes"
 HOME = "/data"
+HERMES_QUIET = "true"
 HERMES_MODEL = "claude-sonnet-4-5"
 ANTHROPIC_API_KEY = ""
 TELEGRAM_BOT_TOKEN = ""
