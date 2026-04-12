@@ -12,9 +12,7 @@ RUN pip install --no-cache-dir \
 ENV HERMES_HOME=/data/.hermes
 ENV HOME=/data
 
-COPY entrypoint.sh /entrypoint.sh
 COPY agents/ /agents/
+RUN find /agents -name "entrypoint.sh" -exec chmod +x {} \;
 
-RUN chmod +x /entrypoint.sh
-
-CMD ["/entrypoint.sh"]
+CMD ["/bin/bash", "-c", "/agents/${AGENT_NAME}/entrypoint.sh"]
