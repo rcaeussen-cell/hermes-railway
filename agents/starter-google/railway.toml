@@ -1,6 +1,5 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "agents/starter-google/Dockerfile"
 
 [deploy]
 restartPolicyType = "on_failure"
@@ -10,8 +9,6 @@ requiredMountPath = "/data"
 HERMES_HOME = "/data/.hermes"
 HOME = "/data"
 HERMES_QUIET = "true"
-AGENT_NAME = "starter-google"
-HERMES_PROVIDER = "gemini"
 HERMES_MODEL = "gemini-2.5-flash"
 GOOGLE_API_KEY = ""
 TELEGRAM_BOT_TOKEN = ""
