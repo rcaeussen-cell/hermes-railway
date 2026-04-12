@@ -24,7 +24,7 @@ mkdir -p "$HERMES_HOME"/{sessions,cron,pairing,logs}
 } > "$HERMES_HOME/config.yaml"
 
 if [[ ! -f "$HERMES_HOME/SOUL.md" ]]; then
-  cp "/agents/starter-anthropic/SOUL.md" "$HERMES_HOME/SOUL.md"
+  cp "/SOUL.md" "$HERMES_HOME/SOUL.md"
 fi
 
 rm -f "$HERMES_HOME/gateway.pid"
