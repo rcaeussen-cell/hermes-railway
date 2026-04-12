@@ -1,6 +1,5 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "agents/starter-anthropic/Dockerfile"
 
 [deploy]
 restartPolicyType = "on_failure"
@@ -9,7 +8,6 @@ requiredMountPath = "/data"
 [variables]
 HERMES_HOME = "/data/.hermes"
 HOME = "/data"
-AGENT_NAME = "starter-anthropic"
 HERMES_MODEL = "claude-sonnet-4-5"
 ANTHROPIC_API_KEY = ""
 TELEGRAM_BOT_TOKEN = ""
