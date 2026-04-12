@@ -1,6 +1,5 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "agents/starter-openai/Dockerfile"
 
 [deploy]
 restartPolicyType = "on_failure"
@@ -10,8 +9,6 @@ requiredMountPath = "/data"
 HERMES_HOME = "/data/.hermes"
 HOME = "/data"
 HERMES_QUIET = "true"
-AGENT_NAME = "starter-openai"
-HERMES_PROVIDER = "openai"
 HERMES_MODEL = "gpt-5.4-mini"
 OPENAI_API_KEY = ""
 TELEGRAM_BOT_TOKEN = ""
