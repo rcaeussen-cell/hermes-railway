@@ -14,8 +14,15 @@ mkdir -p "$HERMES_HOME"/{sessions,cron,pairing,logs}
 
 {
   echo "model:"
-  echo "  provider: ${HERMES_PROVIDER}"
-  echo "  default: ${HERMES_MODEL}"
+  if [[ "${HERMES_PROVIDER}" == "openai" ]]; then
+    echo "  provider: custom"
+    echo "  default: ${HERMES_MODEL}"
+    echo "  base_url: https://api.openai.com/v1"
+    echo "  api_key: ${OPENAI_API_KEY}"
+  else
+    echo "  provider: ${HERMES_PROVIDER}"
+    echo "  default: ${HERMES_MODEL}"
+  fi
   echo "compression:"
   echo "  enabled: false"
   echo "terminal:"
