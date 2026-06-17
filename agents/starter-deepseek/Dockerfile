@@ -17,6 +17,7 @@ RUN pip install --no-cache-dir \
 # The WhatsApp bridge lives in scripts/whatsapp-bridge/ in the git repo,
 # but pip install doesn't package it. Clone a shallow copy to get it.
 RUN git clone --depth 1 https://github.com/NousResearch/hermes-agent.git /tmp/hermes-src && \
+    mkdir -p /opt/venv/lib/python3.11/site-packages/scripts && \
     cp -r /tmp/hermes-src/scripts/whatsapp-bridge /opt/venv/lib/python3.11/site-packages/scripts/whatsapp-bridge && \
     rm -rf /tmp/hermes-src
 
