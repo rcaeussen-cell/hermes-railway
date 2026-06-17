@@ -13,6 +13,12 @@ if [[ "${WHATSAPP_ENABLED:-}" == "true" ]] && [[ -f "$WHATSAPP_SESSION" ]]; then
   WHATSAPP_READY=true
 fi
 
+# Force-disable WhatsApp if not paired — Railway env vars would
+# otherwise override and crash the gateway.
+if ! $WHATSAPP_READY; then
+  export WHATSAPP_ENABLED=false
+fi
+
 {
   echo "DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}"
   [[ -n "${TELEGRAM_BOT_TOKEN:-}" ]] && echo "TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}"
