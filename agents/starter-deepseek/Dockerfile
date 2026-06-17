@@ -10,10 +10,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+# Install Hermes via pip (the core + messaging)
 RUN pip install --no-cache-dir \
     "hermes-agent[messaging,cron] @ git+https://github.com/NousResearch/hermes-agent.git"
 
-# Install WhatsApp Baileys bridge dependencies
+# The WhatsApp bridge lives in scripts/whatsapp-bridge/ in the git repo,
+# but pip install doesn't package it. Clone a shallow copy to get it.
+RUN git clone --depth 1 https://github.com/NousResearch/hermes-agent.git /tmp/hermes-src && \
+    cp -r /tmp/hermes-src/scripts/whatsapp-bridge /opt/venv/lib/python3.11/site-packages/scripts/whatsapp-bridge && \
+    rm -rf /tmp/hermes-src
+
+# Install WhatsApp bridge npm dependencies
 RUN npm install --prefix /opt/venv/lib/python3.11/site-packages/scripts/whatsapp-bridge \
     --no-fund --no-audit --progress=false
 
