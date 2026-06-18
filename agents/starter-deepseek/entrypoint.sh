@@ -23,6 +23,9 @@ fi
   echo "DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}"
   [[ -n "${TELEGRAM_BOT_TOKEN:-}" ]] && echo "TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}"
   [[ -n "${TELEGRAM_ALLOWED_USERS:-}" ]] && echo "TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS}"
+  [[ -n "${IG_USER_ID:-}" ]] && echo "IG_USER_ID=${IG_USER_ID}"
+  [[ -n "${INSTAGRAM_ACCESS_TOKEN:-}" ]] && echo "INSTAGRAM_ACCESS_TOKEN=${INSTAGRAM_ACCESS_TOKEN}"
+  [[ -n "${IMGBB_API_KEY:-}" ]] && echo "IMGBB_API_KEY=${IMGBB_API_KEY}"
   echo "HERMES_QUIET=true"
   if $WHATSAPP_READY; then
     echo "WHATSAPP_ENABLED=true"
@@ -48,6 +51,12 @@ fi
 # SOUL.md — only copy if not already persisted
 if [[ ! -f "$HERMES_HOME/SOUL.md" ]]; then
   cp "/SOUL.md" "$HERMES_HOME/SOUL.md"
+fi
+
+# Data files — copy from image to persistent volume on first deploy
+if [[ ! -f /data/jaarplanning-2026-calamiteiten.xlsx ]]; then
+  cp /data-files/jaarplanning-2026-calamiteiten.xlsx /data/jaarplanning-2026-calamiteiten.xlsx
+  echo "✓ Jaarplanning gekopieerd naar /data/"
 fi
 
 if [[ "${WHATSAPP_ENABLED:-}" == "true" ]] && [[ ! -f "$WHATSAPP_SESSION" ]]; then
