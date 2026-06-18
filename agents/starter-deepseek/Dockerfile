@@ -12,8 +12,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # Install Hermes via pip (the core + messaging)
 RUN pip install --no-cache-dir \
-    "hermes-agent[messaging,cron] @ git+https://github.com/NousResearch/hermes-agent.git" \
-    openpyxl
+    "hermes-agent[messaging,cron] @ git+https://github.com/NousResearch/hermes-agent.git"
 
 # The WhatsApp bridge lives in scripts/whatsapp-bridge/ in the git repo,
 # but pip install doesn't package it. Clone a shallow copy to get it.
@@ -31,7 +30,6 @@ ENV HOME=/data
 
 COPY entrypoint.sh /entrypoint.sh
 COPY SOUL.md /SOUL.md
-COPY data/ /data-files/
 RUN chmod +x /entrypoint.sh
 
 CMD ["/entrypoint.sh"]
