@@ -48,10 +48,8 @@ fi
   echo "  cwd: /data/workspace"
 } > "$HERMES_HOME/config.yaml"
 
-# SOUL.md — only copy if not already persisted
-if [[ ! -f "$HERMES_HOME/SOUL.md" ]]; then
-  cp "/SOUL.md" "$HERMES_HOME/SOUL.md"
-fi
+# SOUL.md — always update from image
+cp "/SOUL.md" "$HERMES_HOME/SOUL.md"
 
 # Data files — copy from image to persistent volume on first deploy
 if [[ ! -f /data/jaarplanning-2026-calamiteiten.xlsx ]]; then
