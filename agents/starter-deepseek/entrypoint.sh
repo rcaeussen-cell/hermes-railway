@@ -51,11 +51,11 @@ fi
 # SOUL.md — always update from image
 cp "/SOUL.md" "$HERMES_HOME/SOUL.md"
 
-# Data files — copy from image to persistent volume on first deploy
-if [[ ! -f /data/jaarplanning-2026-calamiteiten.xlsx ]]; then
-  cp /data-files/jaarplanning-2026-calamiteiten.xlsx /data/jaarplanning-2026-calamiteiten.xlsx
-  echo "✓ Jaarplanning gekopieerd naar /data/"
-fi
+# Data files — always copy from image to persistent volume
+cp /data-files/jaarplanning-2026-calamiteiten.xlsx /data/jaarplanning-2026-calamiteiten.xlsx
+cp /data-files/jaarplanning-2026-calamiteiten.xlsx /data/workspace/jaarplanning-2026-calamiteiten.xlsx
+echo "✓ Jaarplanning gekopieerd naar /data/ en /data/workspace/"
+ls -la /data/jaarplanning-2026-calamiteiten.xlsx /data/workspace/jaarplanning-2026-calamiteiten.xlsx
 
 if [[ "${WHATSAPP_ENABLED:-}" == "true" ]] && [[ ! -f "$WHATSAPP_SESSION" ]]; then
   echo ""

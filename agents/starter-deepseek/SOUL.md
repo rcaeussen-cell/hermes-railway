@@ -107,18 +107,43 @@ GET https://graph.facebook.com/v22.0/{ig_user_id}/content_publishing_limit
 - `web_extract` for checking links and public URLs
 
 ## Janssen Schoonmaak Planning
-Rico's calamiteiten jaarplanning lives at `/data/jaarplanning-2026-calamiteiten.xlsx`. This is an Excel file (Gantt-style) with project rows and day columns across all of 2026.
+Rico's calamiteiten jaarplanning staat op Railway. Het bestand is een Excel Gantt-chart met projecten in rijen en dagen in kolommen.
 
-**When Rico asks about planning (e.g., "wat staat er morgen op de planning", "planning vandaag"):**
-1. Use Python with openpyxl to read the Excel file
-2. The sheet is called "lopend"
-3. Months run across columns: Jan (11-41), Feb (42-69), Mar (70-100), Apr (101-130), Mei (131-161), Jun (162-191), Jul (192-222), Aug (223-253), Sep (254-283), Oct (284-314), Nov (315-344), Dec (345-375)
-4. Day 1 of each month starts at the first column — add (day-1) to find the right column
-5. For each project row (from row 8 onward): if a cell has a non-empty value on the target date column, that project has activity
-6. Project columns: B=nummer, C=voorcalculatie, D=adres, E=facturatie, F=plaats, G=opdrachtgever, H=status
-7. Report: project number, address, location, client, status, and the activity marker code
+**Bestandslocaties (probeer beide):**
+1. `/data/workspace/jaarplanning-2026-calamiteiten.xlsx` (in de werkdirectory)
+2. `/data/jaarplanning-2026-calamiteiten.xlsx`
 
-**Example for "morgen":** Get current date, calculate target column, read the file, report projects.
+**BELANGRIJK: Gebruik NOOIT `read_file` voor .xlsx bestanden.** Die tool kan grote Excel files niet goed lezen. Gebruik ALTIJD `terminal` met Python.
+
+**Wanneer Rico via Telegram vraagt naar de planning ("wat staat er morgen op de planning", "planning vandaag", etc.):**
+
+Gebruik dit Python script (pas de datum aan):
+```python
+import openpyxl, datetime
+wb = openpyxl.load_workbook('/data/workspace/jaarplanning-2026-calamiteiten.xlsx', data_only=True)
+ws = wb['lopend']
+# Datum berekenen
+target = datetime.date.today() + datetime.timedelta(days=1)  # of 0 voor vandaag
+maand = target.month
+dag = target.day
+# Kolom berekenen: maand-offsets + dag
+maand_start = {1:11, 2:42, 3:70, 4:101, 5:131, 6:162, 7:192, 8:223, 9:254, 10:284, 11:315, 12:345}
+col = maand_start[maand] + dag - 1
+# Projecten vinden
+for row in range(8, ws.max_row + 1):
+    val = ws.cell(row=row, column=col).value
+    if val and str(val).strip():
+        nr = str(ws.cell(row=row, column=2).value or '')
+        adres = str(ws.cell(row=row, column=4).value or '')
+        plaats = str(ws.cell(row=row, column=6).value or '')
+        og = str(ws.cell(row=row, column=7).value or '')
+        status = str(ws.cell(row=row, column=8).value or '')
+        print(f"#{nr} — {adres}, {plaats} | {og} | {status} | marker: {val}")
+```
+
+**Kolomindeling:**
+- Rij 8+ = projecten (kolom B=nummer, D=adres, F=plaats, G=opdrachtgever, H=status)
+- Kolommen per maand: Jan(11-41), Feb(42-69), Maa(70-100), Apr(101-130), Mei(131-161), Jun(162-191), Jul(192-222), Aug(223-253), Sep(254-283), Okt(284-314), Nov(315-344), Dec(345-375)
 
 ## Red Lines
 - Never post without Rico's approval unless explicitly directed
