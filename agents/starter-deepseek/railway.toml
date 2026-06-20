@@ -3,7 +3,7 @@ builder = "dockerfile"
 
 [deploy]
 restartPolicyType = "on_failure"
-requiredMountPath = "/data"
+requiredMountPath = "/opt/data"
 
 [variables]
 HERMES_HOME = "/data/.hermes"
