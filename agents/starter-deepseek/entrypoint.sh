@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mkdir -p "$HERMES_HOME"/{sessions,cron,pairing,logs}
+# Fix permissions for Railway volume (pre-built image runs as non-root)
+mkdir -p "$HERMES_HOME"/{sessions,cron,pairing,logs} 2>/dev/null || true
+# Ensure write access for the hermes user
+chmod -R 777 "$HERMES_HOME" 2>/dev/null || true
 mkdir -p /data/workspace
+chmod 777 /data/workspace 2>/dev/null || true
 
 # .env — API keys
 # WhatsApp is skipped on first run (no session yet).
