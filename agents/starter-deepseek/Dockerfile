@@ -1,12 +1,21 @@
-FROM nousresearch/hermes-agent:v2026.6.19
+FROM python:3.11-slim
 
-# Railway volume at /opt/data per pre-built image convention
-ENV HERMES_HOME=/opt/data
-ENV HOME=/opt/data
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates git curl && \
+    rm -rf /var/lib/apt/lists/*
 
-# Write .env from Railway env vars before starting gateway
-COPY entrypoint-wrapper.sh /entrypoint-wrapper.sh
-RUN chmod +x /entrypoint-wrapper.sh
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-ENTRYPOINT ["/entrypoint-wrapper.sh"]
-CMD ["gateway", "run"]
+# Pin to working commit (v0.17.0)
+RUN pip install --no-cache-dir \
+    "hermes-agent[messaging,cron] @ git+https://github.com/NousResearch/hermes-agent.git@65561e9d"
+
+ENV HERMES_HOME=/data/.hermes
+ENV HOME=/data
+
+COPY entrypoint.sh /entrypoint.sh
+COPY SOUL.md /SOUL.md
+RUN chmod +x /entrypoint.sh
+
+CMD ["/entrypoint.sh"]
