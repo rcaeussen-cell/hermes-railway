@@ -69,4 +69,10 @@ if [[ "${WHATSAPP_ENABLED:-}" == "true" ]] && [[ ! -f "$WHATSAPP_SESSION" ]]; th
 fi
 
 rm -f "$HERMES_HOME/gateway.pid"
+
+# Export Telegram vars directly for the pre-built image
+[[ -n "${TELEGRAM_BOT_TOKEN:-}" ]] && export TELEGRAM_BOT_TOKEN
+[[ -n "${TELEGRAM_ALLOWED_USERS:-}" ]] && export TELEGRAM_ALLOWED_USERS
+export DEEPSEEK_API_KEY
+
 exec hermes gateway
