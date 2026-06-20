@@ -7,4 +7,5 @@ COPY entrypoint.sh /entrypoint.sh
 COPY SOUL.md /SOUL.md
 RUN chmod +x /entrypoint.sh
 
+USER root
 CMD ["/entrypoint.sh"]
