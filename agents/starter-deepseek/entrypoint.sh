@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Fix permissions for Railway volume (pre-built image runs as non-root)
-mkdir -p "$HERMES_HOME"/{sessions,cron,pairing,logs} 2>/dev/null || true
-# Ensure write access for the hermes user
+# Fix permissions for Railway volume — nuke stale state first
+rm -rf "$HERMES_HOME" 2>/dev/null || true
+mkdir -p "$HERMES_HOME"/{sessions,cron,pairing,logs}
 chmod -R 777 "$HERMES_HOME" 2>/dev/null || true
 mkdir -p /data/workspace
 chmod 777 /data/workspace 2>/dev/null || true
