@@ -12,7 +12,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # Install Hermes via pip (the core + messaging)
 RUN pip install --no-cache-dir \
-    "hermes-agent[messaging,cron] @ git+https://github.com/NousResearch/hermes-agent.git"
+    "hermes-agent[messaging,cron] @ git+https://github.com/NousResearch/hermes-agent.git@65561e9d"
 
 # The WhatsApp bridge lives in scripts/whatsapp-bridge/ in the git repo,
 # but pip install doesn't package it. Clone a shallow copy to get it.
